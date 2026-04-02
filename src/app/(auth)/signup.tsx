@@ -37,7 +37,7 @@ export default function SignUp() {
                     </View>
 
                     <Text style={styles.footerText}>You already have an account? {""}
-                        <Link href="/sigin" style={styles.footerLink}>
+                        <Link href="/(auth)/sigin" style={styles.footerLink}>
                             Login here.
                         </Link>
                     </Text>

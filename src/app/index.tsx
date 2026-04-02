@@ -5,7 +5,7 @@ import { Image, StyleSheet, Text, View } from "react-native"
 export default function Index() {
 
     function IndexNavigation(){
-        router.push("/sigin")
+        router.push("/auth/sigin")
     }
 
     return (

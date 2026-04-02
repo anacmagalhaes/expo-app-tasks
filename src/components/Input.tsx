@@ -1,11 +1,15 @@
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native"
+import { StyleProp, StyleSheet, Text, TextInput, TextInputProps, TextStyle, View } from "react-native"
 
+type InputProps = TextInputProps & {
+    label?: string,
+    inputStyle?: StyleProp<TextStyle>
+}
 
-
-export function Input({...rest}: TextInputProps){
+export function Input({ label, inputStyle, ...rest}: InputProps){
     return (
-        <View>
-            <TextInput style={styles.input} {...rest}/>
+        <View style={styles.container}>
+            <Text style={styles.label}>{label}</Text>
+            <TextInput style={[styles.input, inputStyle]} {...rest}/>
         </View>
     )
 }
@@ -18,5 +22,13 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         fontSize: 16,
         paddingLeft: 12
+    },
+    container: {
+        flexDirection: "column",
+        gap: 6
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: 700
     }
 })

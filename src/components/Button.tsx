@@ -1,12 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react-native"
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
 type ButtonProps = TouchableOpacityProps & {
-    label: string
+    label: string,
+    icon?: keyof typeof Ionicons.glyphMap
 }
 
-export function Button({ label, ...rest }: ButtonProps) {
+export function Button({ label, icon, ...rest }: ButtonProps) {
     return (
         <TouchableOpacity style={styles.containerButton}  activeOpacity={0.8} {...rest}>
+            {icon && <Ionicons name={icon} size={20} color="#fff"/>}
             <Text style={styles.label}>{label}</Text>
         </TouchableOpacity>
     )
@@ -19,7 +22,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#505dc3",
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 8
+        borderRadius: 8,
+        flexDirection: "row",
+        gap: 8
     },
     label: {
         color: "#FFFFFF",

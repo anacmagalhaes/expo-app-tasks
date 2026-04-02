@@ -1,12 +1,46 @@
 import { Button } from "@/components/Button"
 import { Input } from "@/components/Input"
+import { useUserDatabase } from "@/database/useUserDatabase"
 import { Link, router } from "expo-router"
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"
+import { useState } from "react"
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native"
+import bcrypt from "react-native-bcrypt"
 
 export default function SignUp() {
+    const [id, setId] = useState("");
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPass, setConfimPass] = useState("")
 
-    function handleSingUp(){
-       
+    const usersDatabase = useUserDatabase()
+
+    async function handleSingUp() {
+        try {
+
+            if (!name.trim() || !email.trim() || !password.trim() || !confirmPass.trim()) {
+                return Alert.alert("Register", "All fields must be filled in.")
+            } else if (confirmPass.trim() != password.trim()) {
+                return Alert.alert("Attention!", "The passwords don't match.")
+            }
+
+            const pass = password;
+            const salt = 10;
+            const hashPass = bcrypt.hashSync(pass, salt);
+
+            const response = await usersDatabase.create({ name, email, password });
+
+            Alert.alert(
+                "Register",
+                "User successfully registered!",
+                [
+                    { text: "Login", onPress: () => router.push("/(tabs)/home") }
+                ]
+            );
+        } catch (error) {
+            Alert.alert("Attention!", "Error registering.")
+            console.log(error)
+        }
     }
 
 
@@ -29,11 +63,11 @@ export default function SignUp() {
                     </View>
 
                     <View style={styles.form}>
-                        <Input placeholder="Type your name" />
-                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" />
-                        <Input placeholder="Type your password" secureTextEntry />
-                        <Input placeholder="Confirm your password" secureTextEntry />
-                        <Button label="Register" onPress={handleSingUp}/>
+                        <Input placeholder="Type your name" onChangeText={setName} label="Name" />
+                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" onChangeText={setEmail} label="E-mail" />
+                        <Input placeholder="Type your password" secureTextEntry onChangeText={setPassword} label="Password" />
+                        <Input placeholder="Confirm your password" secureTextEntry onChangeText={setConfimPass} label="Confirm Password" />
+                        <Button label="Register" onPress={handleSingUp} />
                     </View>
 
                     <Text style={styles.footerText}>You already have an account? {""}

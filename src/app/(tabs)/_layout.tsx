@@ -25,11 +25,11 @@ export default function TabsLayout() {
             />
 
             <Tabs.Screen
-                name="done"
+                name="logout"
                 options={{
-                    title: "Done",
+                    title: "Logout",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="checkbox-outline" color={color} size={size} />
+                        <Ionicons name="log-out-outline" color={color} size={size} />
                     ),
                 }}
             />

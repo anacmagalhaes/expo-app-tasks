@@ -6,16 +6,16 @@ import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 
 export default function SingIn() {
 
     function handleSingIn() {
-      router.push("/(tabs)/home")
+        router.push("/(tabs)/home")
     }
 
 
     return (
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
-                showsHorizontalScrollIndicator={false} >
+                showsHorizontalScrollIndicator={false}>
                 <View style={styles.container}>
                     <Image style={styles.ilustration} source={require("@/assets/img1.jpg")} />
 
@@ -25,9 +25,9 @@ export default function SingIn() {
                     </View>
 
                     <View style={styles.form}>
-                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" />
-                        <Input placeholder="Type your password" secureTextEntry />
-                        <Button label="Login" onPress={handleSingIn}/>
+                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" label="E-mail"/>
+                        <Input placeholder="Type your password" secureTextEntry label="Password"/>
+                        <Button label="Login" onPress={handleSingIn} />
                     </View>
 
                     <Text style={styles.footerText}>Don't have an account? {""}

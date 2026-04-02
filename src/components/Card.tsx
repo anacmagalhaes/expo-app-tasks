@@ -1,16 +1,20 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View } from "react-native";
 import { CheckButton } from "./CheckButton";
 
-export function Card() {
+type CheckButtonProps = {
+    title: string, 
+    description?: string
+}
+
+export function Card({ title, description }: CheckButtonProps) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <CheckButton />
-                <Text style={styles.title}>Title Task</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.descriptionContainer}>
-                <Text style={styles.description}>Description Task</Text>
+                <Text style={styles.description}>{description}</Text>
             </View>
         </View>
     )
@@ -23,6 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 12,
         flexDirection: "column",
+        justifyContent: "center"
     },
     titleContainer: {
         flexDirection: "row",

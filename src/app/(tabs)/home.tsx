@@ -10,7 +10,7 @@ export default function Home() {
             <View style={styles.container}>
                 <Greeting label="You've got 7 tasks to do."/>
                 <View style={styles.containerCards}>
-                    <Card />
+                    <Card title="Title Task"/>
                 </View>
             </View>
         </ScrollView>

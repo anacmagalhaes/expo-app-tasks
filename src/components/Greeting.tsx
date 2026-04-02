@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native"
 
 type GreetingProps = {
-    label: string,
+    label?: string,
     name?: string,
 }
 

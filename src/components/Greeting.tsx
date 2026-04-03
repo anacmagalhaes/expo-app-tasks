@@ -1,15 +1,34 @@
-import { StyleSheet, Text, View } from "react-native"
+import { useUserDatabase } from "@/database/useUserDatabase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type GreetingProps = {
     label?: string,
-    name?: string,
+    name: string,
 }
 
-export function Greeting({ label }: GreetingProps) {
+export function Greeting({ label, name }: GreetingProps) {
+    const [userName, setUserName] = useState("")
+
+    const usersDatabase = useUserDatabase()
+
+    async function getUser(){
+        const userId = await AsyncStorage.getItem("userId");
+        if(userId){
+            const user = await usersDatabase.searchById(Number(userId));
+            setUserName(user!.name);
+        }
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
+
     return (
         <View style={styles.container}>
             <Text style={styles.greeting}>Welcome, {""}
-                <Text style={styles.greetingName}>Carol</Text>
+                <Text style={styles.greetingName}>{userName}</Text>
             </Text>
             <Text style={styles.descriptionTitle}>{label}</Text>
         </View>

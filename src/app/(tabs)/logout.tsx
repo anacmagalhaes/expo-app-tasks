@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native"
 export default function Logout(){
 
     function logout(){
-        router.push("/(auth)/sigin")
+        router.replace("/(auth)/sigin")
     }
 
     return (

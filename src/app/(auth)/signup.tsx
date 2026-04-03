@@ -28,13 +28,13 @@ export default function SignUp() {
             const salt = 10;
             const hashPass = bcrypt.hashSync(pass, salt);
 
-            const response = await usersDatabase.create({ name, email, password });
+            const response = await usersDatabase.create({ name, email, password: hashPass });
 
             Alert.alert(
                 "Register",
                 "User successfully registered!",
                 [
-                    { text: "Login", onPress: () => router.push("/(tabs)/home") }
+                    { text: "Login", onPress: () => router.replace("/(tabs)/home") }
                 ]
             );
         } catch (error) {

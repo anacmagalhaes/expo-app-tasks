@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 type GreetingProps = {
     label?: string,
-    name: string,
+    name?: string,
 }
 
 export function Greeting({ label, name }: GreetingProps) {

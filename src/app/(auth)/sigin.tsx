@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button"
 import { Input } from "@/components/Input"
 import { useUserDatabase } from "@/database/useUserDatabase"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Link, router } from "expo-router"
 import { useState } from "react"
 import { Alert, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from "react-native"
@@ -30,12 +31,19 @@ export default function SingIn() {
         }
         console.log(response)
 
-        return Alert.alert(
+        Alert.alert(
             "Login",
             `Bem-vindo(a), ${response.name}`,
             [
-                { text: "Ok", onPress: () => router.replace("/(tabs)/home") }
-            ])
+                {
+                    text: "Ok",
+                    onPress: async () => {
+                        await AsyncStorage.setItem("userId", String(response.id));
+                        router.replace("/(tabs)/home");
+                    }
+                }
+            ]
+        );
     }
 
 

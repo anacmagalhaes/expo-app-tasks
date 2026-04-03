@@ -45,6 +45,18 @@ export function useUserDatabase() {
         }
     }
 
+    async function searchById(id: number){
+        try {
+            const query = "SELECT * FROM users WHERE id = ?"
 
-    return { create, searchByEmail }
+            const response = await database.getFirstAsync<UserDatabase>(query, `${id}`)
+
+            return response
+        } catch(error){
+            throw error
+        }
+    }
+
+
+    return { create, searchByEmail, searchById }
 }

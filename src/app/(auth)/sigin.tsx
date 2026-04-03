@@ -1,13 +1,43 @@
 import { Button } from "@/components/Button"
 import { Input } from "@/components/Input"
+import { useUserDatabase } from "@/database/useUserDatabase"
 import { Link, router } from "expo-router"
-import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { useState } from "react"
+import { Alert, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from "react-native"
+import bcrypt from "react-native-bcrypt"
 
 export default function SingIn() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
-    function handleSingIn() {
-        router.push("/(tabs)/home")
+    const userDatabase = useUserDatabase();
+
+    async function handleSingIn() {
+        if (!email.trim() || !password.trim()) {
+            return Alert.alert("Login", "All fields must be filled in.")
+        }
+
+        const response = await userDatabase.searchByEmail(email);
+
+        if (!response) {
+            return Alert.alert("Error", "User not found.")
+        }
+
+        const passValid = bcrypt.compareSync(password, response.password);
+
+        if (!passValid) {
+            return Alert.alert("Attention!", "Invalid password.")
+        }
+        console.log(response)
+
+        return Alert.alert(
+            "Login",
+            `Bem-vindo(a), ${response.name}`,
+            [
+                { text: "Ok", onPress: () => router.replace("/(tabs)/home") }
+            ])
     }
+
 
 
     return (
@@ -25,8 +55,8 @@ export default function SingIn() {
                     </View>
 
                     <View style={styles.form}>
-                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" label="E-mail"/>
-                        <Input placeholder="Type your password" secureTextEntry label="Password"/>
+                        <Input placeholder="Type your e-mail adress" keyboardType="email-address" label="E-mail" onChangeText={setEmail} />
+                        <Input placeholder="Type your password" secureTextEntry label="Password" onChangeText={setPassword} />
                         <Button label="Login" onPress={handleSingIn} />
                     </View>
 

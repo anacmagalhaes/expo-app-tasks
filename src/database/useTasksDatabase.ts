@@ -4,9 +4,6 @@ export type TaskDatabase = {
     id: number,
     title: string,
     description?: string,
-    user_id: number,
-    done: number,
-    created_at: string
 }
 
 export function useTasksDatabase() {
@@ -14,21 +11,21 @@ export function useTasksDatabase() {
 
     async function create(data: Omit<TaskDatabase, "id">) {
         const statement = await database.prepareAsync(
-            "INSERT INTO tasks (title, description, user_id, done, created_at) VALUES ($title, $description, $user_id, $done, $created_at)"
+            "INSERT INTO tasks (title, description) VALUES ($title, $description)"
         );
 
         try {
             const result = await statement.executeAsync({
                 $title: data.title,
                 $description: data.description ?? null,
-                $user_id: data.user_id,
-                $done: data.done ?? 0,
-                $created_at: data.created_at ?? new Date().toISOString()
             })
 
-            const insertedRowId = result.lastInsertRowId.toLocaleString();
+            return {
+                id: Number(result.lastInsertRowId),
+                title: data.title,
+                description: data.description
+            };
 
-            return { insertedRowId }
         } catch (error) {
             throw error
         } finally {
@@ -43,7 +40,7 @@ export function useTasksDatabase() {
             const response = await database.getAllAsync<TaskDatabase>(query)
 
             return response
-        } catch(error){
+        } catch (error) {
             throw error
         }
     }

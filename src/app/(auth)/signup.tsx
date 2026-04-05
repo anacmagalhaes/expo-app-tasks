@@ -34,7 +34,7 @@ export default function SignUp() {
                 "Register",
                 "User successfully registered!",
                 [
-                    { text: "Login", onPress: () => router.replace("/(tabs)/home") }
+                    { text: "Login", onPress: () => router.replace("/(auth)/sigin") }
                 ]
             );
         } catch (error) {

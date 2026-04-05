@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { CheckButton } from "./CheckButton";
 
 type CheckButtonProps = {
-    title: string, 
+    title: string,
     description?: string
 }
 

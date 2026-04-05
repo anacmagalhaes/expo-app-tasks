@@ -27,7 +27,7 @@ export function Greeting({ label, name }: GreetingProps) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.greeting}>Welcome, {""}
+            <Text style={styles.greeting}>Welcome, Mr. {""}
                 <Text style={styles.greetingName}>{userName}</Text>
             </Text>
             <Text style={styles.descriptionTitle}>{label}</Text>
